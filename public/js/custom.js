@@ -56,7 +56,7 @@
           header: {
               left:   'prev,next today',
               center: 'title',
-              right:  'month,agendaWeek,agendaDay'
+              right:  ''
           },
           buttonIcons: { // note the space at the beginning
               prev:    ' fa fa-caret-left',
@@ -102,7 +102,9 @@
             draggingEvent = event;
           },
           // This array is the events sources
-          events: events
+          events: events,
+          height: $(window).height() - 250,
+          titleFormat: 'MMM YYYY',
       });
   }
 
@@ -279,7 +281,7 @@
   $(document).on('click', Selector, function (e) {
       e.preventDefault();
       var key = $(this).data('key');
-      
+
       if(key) {
         store.remove(key);
         // reload the page
@@ -590,11 +592,11 @@
 
     //
     // Zero configuration
-    // 
+    //
 
     $('#datatable1').dataTable({
         'paging':   true,  // Table pagination
-        'ordering': true,  // Column ordering 
+        'ordering': true,  // Column ordering
         'info':     true,  // Bottom left status text
         // Text translation options
         // Note the required keywords between underscores (e.g _MENU_)
@@ -609,13 +611,13 @@
     });
 
 
-    // 
+    //
     // Filtering by Columns
-    // 
+    //
 
     var dtInstance2 = $('#datatable2').dataTable({
         'paging':   true,  // Table pagination
-        'ordering': true,  // Column ordering 
+        'ordering': true,  // Column ordering
         'info':     true,  // Bottom left status text
         // Text translation options
         // Note the required keywords between underscores (e.g _MENU_)
@@ -638,13 +640,13 @@
       });
 
 
-    // 
+    //
     // Column Visibilty Extension
-    // 
+    //
 
     $('#datatable3').dataTable({
         'paging':   true,  // Table pagination
-        'ordering': true,  // Column ordering 
+        'ordering': true,  // Column ordering
         'info':     true,  // Bottom left status text
         // Text translation options
         // Note the required keywords between underscores (e.g _MENU_)
@@ -704,7 +706,7 @@
  * Animated transition for dropdown open state
  * Animation name placed in [data-play="animationName"]  (http://daneden.github.io/animate.css/)
  * Optionally add [data-duration=seconds]
- * 
+ *
  * Requires animo.js
  =========================================================*/
 
@@ -731,7 +733,7 @@
           target.animo( { animation: animation,  duration: duration} );
 
     });
-  
+
   });
 
 }(jQuery, window, document));
@@ -1139,9 +1141,9 @@ $(document).ready(function() {
       e.preventDefault();
 
       if (screenfull.enabled) {
-        
+
         screenfull.toggle();
-        
+
         // Switch icon indicator
         if(screenfull.isFullscreen)
           $(this).children('em').removeClass('fa-expand').addClass('fa-compress');
@@ -1180,9 +1182,9 @@ $(document).ready(function() {
 
   if($.fn.gMap) {
       var gMapRefs = [];
-      
+
       $(mapSelector).each(function(){
-          
+
           var $this   = $(this),
               addresses = $this.data('address') && $this.data('address').split(';'),
               titles    = $this.data('title') && $this.data('title').split(';'),
@@ -1225,7 +1227,7 @@ $(document).ready(function() {
 
             // set the styles
             if($this.data('styled') !== undefined) {
-              
+
               ref.setOptions({
                 styles: MapStyles
               });
@@ -1235,7 +1237,7 @@ $(document).ready(function() {
 
       }); //each
   }
-  
+
   // Center Map marker on resolution change
   $(window).resize(function() {
 
@@ -1735,7 +1737,7 @@ $(document).ready(function() {
 
 (function($, window, document){
   'use strict';
-  
+
   $(function() {
 
     var openSelector    = '[data-toggle="navbar-search"]',
@@ -1745,11 +1747,11 @@ $(document).ready(function() {
 
     var NavSearch = {
       toggle: function() {
-        
+
         navbarForm.toggleClass('open');
-        
+
         var isOpen = navbarForm.hasClass('open');
-        
+
         navbarForm.find('input')[isOpen ? 'focus' : 'blur']();
 
       },
@@ -1824,7 +1826,7 @@ $(document).ready(function() {
 
       if(!message)
         $.error('Notify: No message specified');
-     
+
       $.notify(message, options || {});
   }
 
@@ -2011,13 +2013,13 @@ $(document).ready(function() {
  =========================================================*/
 (function($, window, document){
   'use strict';
-  
+
   var panelSelector = '[data-perform="panel-dismiss"]',
       removeEvent   = 'panel-remove',
       removedEvent  = 'panel-removed';
 
   $(document).on('click', panelSelector, function () {
-    
+
     // find the first parent panel
     var parent = $(this).closest('.panel');
 
@@ -2071,7 +2073,7 @@ $(document).ready(function() {
         collapseOpts = {toggle: false},
         iconElement  = $this.children('em'),
         panelId      = parent.attr('id');
-    
+
     // if wrapper not added, add it
     // we need a wrapper to avoid jumping due to the paddings
     if( ! wrapper.length) {
@@ -2106,7 +2108,7 @@ $(document).ready(function() {
 
   // finally catch clicks to toggle panel collapse
   $(document).on('click', panelSelector, function () {
-    
+
     var parent = $(this).closest('.panel');
     var wrapper = parent.find('.panel-wrapper');
 
@@ -2183,19 +2185,19 @@ $(document).ready(function() {
 
   /**
    * This function is only to show a demonstration
-   * of how to use the panel refresh system via 
-   * custom event. 
+   * of how to use the panel refresh system via
+   * custom event.
    * IMPORTANT: see how to remove the spinner.
    */
 
   $('.panel.panel-demo').on('panel-refresh', function(e, panel){
-    
+
     // perform any action when a .panel triggers a the refresh event
     setTimeout(function(){
-  
+
       // when the action is done, just remove the spinner class
       panel.removeSpinner();
-  
+
     }, 3000);
 
   });
@@ -2205,21 +2207,21 @@ $(document).ready(function() {
 /**=========================================================
  * Module: play-animation.js
  * Provides a simple way to run animation with a trigger
- * Targeted elements must have 
+ * Targeted elements must have
  *   [data-toggle="play-animation"]
- *   [data-target="Target element affected by the animation"] 
+ *   [data-target="Target element affected by the animation"]
  *   [data-play="Animation name (http://daneden.github.io/animate.css/)"]
  *
  * Requires animo.js
  =========================================================*/
- 
+
 (function($, window, document){
   'use strict';
 
   var Selector = '[data-toggle="play-animation"]';
 
   $(function() {
-    
+
     var $scroller = $(window).add('body, .wrapper');
 
     // Parse animations params and attach trigger to scroll
@@ -2228,9 +2230,9 @@ $(document).ready(function() {
           offset    = $this.data('offset'),
           delay     = $this.data('delay')     || 100, // milliseconds
           animation = $this.data('play')      || 'bounce';
-      
+
       if(typeof offset !== 'undefined') {
-        
+
         // test if the element starts visible
         testAnimation($this);
         // test on scroll
@@ -2269,7 +2271,7 @@ $(document).ready(function() {
       if(target && target) {
         target.animo( { animation: animation } );
       }
-      
+
     });
 
   });
@@ -2318,9 +2320,9 @@ $(document).ready(function() {
   });
 
   function savePortletOrder(event, ui) {
-    
+
     var data = store.get(storageKeyName);
-    
+
     if(!data) { data = {}; }
 
     data[this.id] = $(this).sortable('toArray');
@@ -2328,23 +2330,23 @@ $(document).ready(function() {
     if(data) {
       store.set(storageKeyName, data);
     }
-    
+
     // save portlet size to avoid jumps
     saveListSize.apply(this);
   }
 
   function loadPortletOrder() {
-    
+
     var data = store.get(storageKeyName);
 
     if(data) {
-      
+
       var porletId = this.id,
           panels   = data[porletId];
 
       if(panels) {
         var portlet = $('#'+porletId);
-        
+
         $.each(panels, function(index, value) {
            $('#'+value).appendTo(portlet);
         });
@@ -2371,7 +2373,7 @@ $(document).ready(function() {
 
 /**=========================================================
  * Module: sidebar-menu.js
- * Provides a simple way to implement bootstrap collapse plugin using a target 
+ * Provides a simple way to implement bootstrap collapse plugin using a target
  * next to the current element (sibling)
  * Targeted elements must have [data-toggle="collapse-next"]
  =========================================================*/
@@ -2389,7 +2391,7 @@ $(document).ready(function() {
     $(document)
       .on('click', collapseSelector, function (e) {
           e.preventDefault();
-          
+
           if ($(window).width() > phone_mq &&
               $body.hasClass(toggledClass)) return;
 
@@ -2445,7 +2447,7 @@ $(document).ready(function() {
         dark: '#3a3f51'
     };
 
-    // Inline sparklines take their values from the contents of the tag 
+    // Inline sparklines take their values from the contents of the tag
     $(Selector).each(function() {
 
         var el = $(this);
@@ -2483,7 +2485,7 @@ $(document).ready(function() {
 
 (function($, window, document){
   'use strict';
-  
+
   var Selector = 'th.check-all';
 
   $(Selector).on('change', function() {
@@ -2501,8 +2503,8 @@ $(document).ready(function() {
 
 /**=========================================================
  * Module: toggle-state.js
- * Toggle a classname from the BODY Useful to change a state that 
- * affects globally the entire layout or more than one item 
+ * Toggle a classname from the BODY Useful to change a state that
+ * affects globally the entire layout or more than one item
  * Targeted elements must have [data-toggle="CLASS-NAME-TO-TOGGLE"]
  =========================================================*/
 
@@ -2515,7 +2517,7 @@ $(document).ready(function() {
   $(document).on('click', SelectorToggle, function (e) {
       e.preventDefault();
       var classname = $(this).data('toggleState');
-      
+
       if(classname)
         $body.toggleClass(classname);
 
@@ -2874,13 +2876,13 @@ $(document).ready(function() {
 
 /**=========================================================
  * Module: utils.js
- * jQuery Utility functions library 
+ * jQuery Utility functions library
  * adapted from the core of UIKit
  =========================================================*/
 
 (function($, window, doc){
     'use strict';
-    
+
     var $html = $("html"), $win = $(window);
 
     $.support.transition = (function() {

@@ -29,6 +29,14 @@
    <!-- END Page Custom CSS-->
    <!-- App CSS-->
    <link rel="stylesheet" href="/css/custom.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" />
+
+   <style media="screen">
+    .about-links-item {
+      list-style-type: none;
+      padding: 0;
+    }
+   </style>
    <!-- Modernizr JS Script-->
    <script src="/js/modernizr.custom.js" type="application/javascript"></script>
    <!-- FastClick for mobiles-->
@@ -513,194 +521,202 @@
                <button type="button" data-toggle="reset" data-key="portletState" class="btn btn-default btn-sm">Reset Porlets</button>
             </div>
             <h3>Portlets
-               <small>Drag and collapse panels. Refresh and see how their state is automatically saved</small>
             </h3>
             <!-- START row-->
             <div class="row">
                <div id="portlet-1" data-toggle="portlet" class="col-lg-4">
                   <!-- START panel-->
-                  <div id="panel-1" class="panel panel-default">
-                     <div class="panel-heading portlet-handler">Default Panel
+                  <div id="panel-1" class="panel panel-inverse">
+                     <div class="panel-heading portlet-handler">行事曆
                         <a href="#" data-perform="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
                            <em class="fa fa-minus"></em>
                         </a>
                      </div>
                      <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                        <div id="calendar"></div>
                      </div>
-                     <div class="panel-footer">Panel Footer</div>
                   </div>
                   <!-- END panel-->
                   <!-- START panel-->
-                  <div id="panel-2" class="panel panel-primary">
-                     <div class="panel-heading portlet-handler">Primary Panel
+                  <div id="panel-2" class="panel panel-inverse">
+                     <div class="panel-heading portlet-handler">其他申請
                         <a href="#" data-perform="panel-collapse" data-toggle="tooltip" title="Collapse Panel" class="pull-right">
                            <em class="fa fa-minus"></em>
                         </a>
                      </div>
                      <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                        <ul class="about-links-item">
+                        @foreach ($others as $other)
+                            <li>
+                              <a href="#" title="{{ $other['title'] }}">
+                                {{ $other['title'] }}
+                              </a>
+                            </li>
+                        @endforeach
+                        </ul>
                      </div>
-                     <div class="panel-footer">Panel Footer</div>
                   </div>
                   <!-- END panel-->
-                  <!-- START panel-->
-                  <div id="panel-3" class="panel panel-success">
-                     <div class="panel-heading portlet-handler">Success Panel</div>
-                     <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                     </div>
-                     <div class="panel-footer">Panel Footer</div>
-                  </div>
-                  <!-- END panel-->
-                  <!-- START widget-->
-                  <div id="panel-4" class="panel widget">
-                     <div class="portlet-handler">
-                        <div class="row row-table row-flush">
-                           <div class="col-xs-4 bg-danger text-center">
-                              <em class="fa fa-music fa-2x"></em>
-                           </div>
-                           <div class="col-xs-8">
-                              <div class="panel-body text-center">
-                                 <h4 class="mt0">100%</h4>
-                                 <p class="mb0 text-muted">VOLUME</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- END widget-->
-                  <!-- START widget-->
-                  <div id="panel-5" class="panel widget">
-                     <div class="portlet-handler">
-                        <div class="row row-table row-flush">
-                           <div class="col-xs-4 bg-inverse text-center">
-                              <em class="fa fa-code-fork fa-2x"></em>
-                           </div>
-                           <div class="col-xs-8">
-                              <div class="panel-body text-center">
-                                 <h4 class="mt0">150</h4>
-                                 <p class="mb0 text-muted">FORKS</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- END widget-->
                </div>
                <div id="portlet-2" data-toggle="portlet" class="col-lg-4">
                   <!-- START panel-->
-                  <div id="panel-6" class="panel panel-info">
-                     <div class="panel-heading portlet-handler">Info Panel</div>
+                  <div id="panel-6" class="panel panel-inverse">
+                     <div class="panel-heading portlet-handler">公告</div>
                      <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                        <ul class="about-links-item">
+                        @foreach ($announces as $announce)
+                           <li>
+                             <a href="#" title="{{ $announce->announce_title }}">
+                               {{ $announce->announce_title }}
+                             </a>
+                           </li>
+                        @endforeach
+                        </ul>
                      </div>
-                     <div class="panel-footer">Panel Footer</div>
                   </div>
                   <!-- END panel-->
                   <!-- START panel-->
-                  <div id="panel-7" class="panel panel-warning">
-                     <div class="panel-heading portlet-handler">Warning Panel</div>
+                  <div id="panel-7" class="panel panel-inverse">
+                     <div class="panel-heading portlet-handler">待簽核事項</div>
                      <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                        <table id="datatable1" class="table table-striped table-hover dataTable no-footer" role="grid" aria-describedby="datatable1_info">
+                           <thead>
+                              <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="datatable1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column ascending">類</th>
+                                <th class="sorting" tabindex="0" aria-controls="datatable1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">單號</th>
+                                <th class="sorting" tabindex="0" aria-controls="datatable1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">申請人</th>
+                                <th class="sort-numeric sorting" tabindex="0" aria-controls="datatable1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">開單日期</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                            <tr>
+  														<th colspan="1" data-columns="tech-companies-1-col-0">出</th>
+  														<td data-priority="1" colspan="1" data-columns="tech-companies-1-col-1">W115120011</td>
+  														<td data-priority="3" colspan="1" data-columns="tech-companies-1-col-2">tingwu</td>
+  														<td data-priority="1" colspan="1" data-columns="tech-companies-1-col-3">2016/12/01</td>
+  													</tr>
+  													<tr>
+  														<th colspan="1" data-columns="tech-companies-1-col-0">請</th>
+  														<td data-priority="1" colspan="1" data-columns="tech-companies-1-col-1">W115120011</td>
+  														<td data-priority="3" colspan="1" data-columns="tech-companies-1-col-2">tingwu</td>
+  														<td data-priority="1" colspan="1" data-columns="tech-companies-1-col-3">2016/12/01</td>
+  													</tr>
+												</tbody>
+                        </table>
                      </div>
-                     <div class="panel-footer">Panel Footer</div>
                   </div>
                   <!-- END panel-->
                   <!-- START panel-->
-                  <div id="panel-8" class="panel panel-danger">
-                     <div class="panel-heading portlet-handler">Danger Panel</div>
+                  <div id="panel-8" class="panel panel-inverse">
+                     <div class="panel-heading portlet-handler">其他活動</div>
                      <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                        <ul class="about-links-item">
+                          <li>
+                            <a href="#">其他活動</a>
+                          </li>
+                          <li>
+                            <a href="#">2016 KKBOX 集團保齡球競賽現場</a>
+                          </li>
+                          <li>
+                            <a href="#">隱形眼鏡團購</a>
+                          </li>
+                        </ul>
                      </div>
-                     <div class="panel-footer">Panel Footer</div>
                   </div>
                   <!-- END panel-->
-                  <!-- START widget-->
-                  <div id="panel-9" class="panel widget">
-                     <div class="portlet-handler">
-                        <div class="row row-table row-flush">
-                           <div class="col-xs-12">
-                              <div class="panel-body text-center bg-purple">
-                                 <h4 class="mt0">10k</h4>
-                                 <p class="mb0 text-white">VISITORS</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- END widget-->
-                  <!-- START widget-->
-                  <div id="panel-10" class="panel widget">
-                     <div class="portlet-handler">
-                        <div class="row row-table row-flush">
-                           <div class="col-xs-12">
-                              <div class="panel-body text-center bg-pink">
-                                 <h4 class="mt0">100%</h4>
-                                 <p class="mb0 text-white">VOLUME</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- END widget-->
                </div>
                <div id="portlet-3" data-toggle="portlet" class="col-lg-4">
                   <!-- START panel-->
                   <div id="panel-11" class="panel panel-inverse">
-                     <div class="panel-heading portlet-handler">Inverse Panel</div>
+                     <div class="panel-heading portlet-handler">常用系統</div>
                      <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                        <ul class="about-links-item">
+                        @foreach ($sidebars as $sidebar)
+
+                          <li>
+                            <a href="#" title="{{ $sidebar['title'] }}">
+                              {{ $sidebar['title'] }}
+                            </a>
+                          </li>
+
+                        @endforeach
+                        </ul>
                      </div>
-                     <div class="panel-footer">Panel Footer</div>
                   </div>
                   <!-- END panel-->
                   <!-- START panel-->
-                  <div id="panel-12" class="panel panel-purple">
-                     <div class="panel-heading portlet-handler">Purple Panel</div>
+                  <div id="panel-12" class="panel panel-inverse">
+                     <div class="panel-heading portlet-handler">辦公室資訊</div>
                      <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                        <ul class="about-links-item">
+                          <li>
+                            <a href="#">各據點聯絡方式</a>
+                          </li>
+                          <li>
+                            <a href="#">座位平面圖</a>
+                          </li>
+                          <li>
+                            <a href="#">分機表</a>
+                          </li>
+                          <li>
+                            <a href="#">VPN 使用說明</a>
+                          </li>
+                        </ul>
                      </div>
-                     <div class="panel-footer">Panel Footer</div>
                   </div>
                   <!-- END panel-->
                   <!-- START panel-->
-                  <div id="panel-13" class="panel panel-green">
-                     <div class="panel-heading portlet-handler">Green Panel</div>
+                  <div id="panel-13" class="panel panel-inverse">
+                     <div class="panel-heading portlet-handler">其他公司</div>
                      <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                     </div>
-                     <div class="panel-footer">Panel Footer</div>
-                  </div>
-                  <!-- END panel-->
-                  <!-- START widget-->
-                  <div id="panel-14" class="panel widget">
-                     <div class="portlet-handler">
-                        <div class="row row-table row-flush">
-                           <div class="col-xs-12">
-                              <div class="panel-body text-center bg-green">
-                                 <h4 class="mt0">150</h4>
-                                 <p class="mb0 text-white">FORKS</p>
-                              </div>
+                        <ul class="nav nav-pills">
+                           <li class=""><a href="#home-pills" data-toggle="tab">KKBOX </a>
+                           </li>
+                           <li class=""><a href="#home-pills" data-toggle="tab">KKStream </a>
+                           </li>
+                           <li class="active"><a href="#home-pills" data-toggle="tab">KKTV</a>
+                           </li>
+                           <li class=""><a href="#home-pills" data-toggle="tab">KKTown</a>
+                           </li>
+                           <li class=""><a href="#home-pills" data-toggle="tab">KKTIX</a>
+                           </li>
+                        </ul>
+                        <div class="tab-content">
+                           <div id="home-pills" class="tab-pane fade  active in">
+                              <ul class="about-links-item">
+                                <li>
+                                  <a href="#">組識圖</a>
+                                </li>
+                                <li>
+                                  <a href="#">核決權限</a>
+                                </li>
+                                <li>
+                                  <a href="#">管理辦法</a>
+                                </li>
+                                <li>
+                                  <a href="#">福委會管理辦法</a>
+                                </li>
+                              </ul>
+                           </div>
+                           <div id="profile-pills" class="tab-pane fade">
+                              <h4>Profile Tab</h4>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                           </div>
+                           <div id="messages-pills" class="tab-pane fade">
+                              <h4>Messages Tab</h4>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                           </div>
+                           <div id="settings-pills" class="tab-pane fade">
+                              <h4>Settings Tab</h4>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                            </div>
                         </div>
                      </div>
                   </div>
-                  <!-- END widget-->
-                  <!-- START widget-->
-                  <div id="panel-15" class="panel widget">
-                     <div class="portlet-handler">
-                        <div class="row row-table row-flush">
-                           <div class="col-xs-12">
-                              <div class="panel-body text-center bg-primary">
-                                 <h4 class="mt0">10</h4>
-                                 <p class="mb0 text-white">NEW MESSAGES</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- END widget-->
+                  <!-- END panel-->
                </div>
             </div>
             <!-- END row-->
@@ -732,7 +748,12 @@
    <!-- jQuery UI-->
    <script src="/js/jquery-ui.min.js"></script>
    <script src="/js/jquery.ui.touch-punch.min.js"></script>
+   <!-- MomentJs-->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+   <!-- FulCalendar-->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
    <!-- END Page Custom Script-->
+
    <!-- App Main-->
    <script src="/js/custom.js"></script>
    <!-- END Scripts-->
